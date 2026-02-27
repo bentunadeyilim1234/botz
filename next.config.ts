@@ -6,11 +6,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://ws.alitunabaylan.com.tr/api/:path*',
+        destination: 'https://ws.alitunabaylan.com.tr/api/:path*',
       },
       {
         source: '/ws/:path*',
-        destination: 'http://ws.alitunabaylan.com.tr/ws/:path*',
+        destination: 'https://ws.alitunabaylan.com.tr/ws/:path*',
       },
     ];
   },
