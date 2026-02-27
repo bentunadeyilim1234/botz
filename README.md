@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BotZ: Kahoot Botting Software
 
-## Getting Started
+*(TBA)*
 
-First, run the development server:
+BotZ is a high-performance, threaded Playwright execution engine built to simulate advanced web interactions at scale. It securely and rapidly automates joining sessions, retaining contexts, and clicking dynamic elements all while preserving a low hardware footprint.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> **Disclaimer:** This project is intended strictly for educational purposes and stress-testing your own systems.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Mass Concurrency:** Spin up 100+ bot threads simultaneously without crashing your host system.
+- **Resource Optimized:** Automatically intercepts and blocks all images, media, stylesheets, and fonts in Chromium to save massive amounts of RAM and CPU.
+- **Anti-Ban Proxies:** Built-in proxy rotation lets you securely obfuscate node origins.
+- **Live Terminal Logs:** A beautiful, retro-tech style UI streams WebSocket logs from the Fastify backend directly to your browser.
+- **Auto-Cleanup:** All stranded Chromium instances are automatically killed after a hardcoded 10-minute timeout to clear active memory.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Tech Stack
+- Frontend: **Next.js 14**, **Tailwind CSS**, Lucide Icons
+- Backend: **Fastify**, Fastify WebSocket, Fastify CORS
+- Engine: **Playwright** (Chromium headless)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Installation & Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Local Development
 
-## Deploy on Vercel
+1. **Clone & Install Dependencies**
+   ```bash
+   pnpm install
+   ```
+2. **Setup Playwright Browsers**
+   ```bash
+   npx playwright install chromium
+   ```
+3. **Run the Project**
+   This repository uses `concurrently` to boot the Next.js frontend and Fastify backend automatically with one command.
+   ```bash
+   pnpm run dev
+   ```
+   *Frontend starts on `http://localhost:3000`*
+   *Backend starts on `http://localhost:3001`*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ☁️ Deployment (Coolify)
+
+K-Botter comes pre-configured with a `nixpacks.toml` file to ensure a seamless deployment setup in **Coolify**.
+
+1. Connect your repository to Coolify.
+2. Select **Nixpacks** as the build engine.
+3. Coolify will automatically read the `nixpacks.toml`. This installs necessary system libraries needed to run Playwright headlessly (`nixPkgs = ["playwright"]`).
+4. Ensure your Coolify deployment exposes **both** ports (e.g., `3000` for Next.js, and map `3001` for the Fastify WebSocket).
+
+---
+
+## 🎥 Video Demonstration
+
+*(TBA)*
+
+---
+
+### How to configure Proxies?
+If you toggle "Use Proxy" in the UI, K-Botter reads from an array of proxies configured inside `engine.ts` (`defaultProxies`). Open the file and insert your IP:PORT combos to instantly secure your traffic!
