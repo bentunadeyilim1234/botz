@@ -13,7 +13,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Playwright Task Runner | Web Automation",
+  title: "BotZ Network",
   description: "A sleek, high-performance web automation platform powered by Playwright and Fastify.",
 };
 

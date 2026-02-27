@@ -14,7 +14,8 @@ export default function Home() {
 
   // Real-time WebSocket connection to Fastify
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:3001/ws/status");
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(`${wsProtocol}//${window.location.host}/ws/status`);
     ws.onmessage = (event) => {
       try {
         const msg = JSON.parse(event.data);
@@ -45,7 +46,7 @@ export default function Home() {
     setIsRunning(true);
 
     try {
-      const res = await fetch("http://localhost:3001/api/tasks/start", {
+      const res = await fetch("/api/tasks/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ gamePin, nameAlias, threads: Number(threads), useProxy })
@@ -63,7 +64,7 @@ export default function Home() {
   const abortTask = async () => {
     if (!taskId) return;
     try {
-      await fetch("http://localhost:3001/api/tasks/abort", {
+      await fetch("/api/tasks/abort", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ taskId })
@@ -85,10 +86,10 @@ export default function Home() {
           <Activity className="w-10 h-10 text-purple-400" />
         </div>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-purple-200 to-purple-600 font-heading">
-          K-Botter.
+          BotZ Network
         </h1>
         <p className="text-lg md:text-xl text-neutral-300 max-w-2xl font-medium">
-          High-performance, threaded Playwright execution engine.
+          High-performance, threaded Kahoot botting engine. <br />
           Join any session, instantly and securely.
         </p>
       </header>
