@@ -2,10 +2,10 @@
 nixPkgs = ["nodejs_22"]
 
 [phases.install]
-cmds = ["npm install -g pnpm@9", "pnpm install", "npx playwright install chromium --with-deps"]
+cmds = ["npm install -g pnpm@9 && pnpm install", "npx playwright install chromium --with-deps"]
 
 [phases.build]
-cmds = ["pnpm run build"]
+cmds = ["npm run build"]
 
 [start]
 cmd = "npm start"
