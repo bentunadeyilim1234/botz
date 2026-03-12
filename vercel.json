@@ -1,0 +1,19 @@
+{
+  "functions": {
+    "src/app/api/stream/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/tasks/start/route.ts": {
+      "maxDuration": 300
+    },
+    "src/app/api/tasks/abort/route.ts": {
+      "maxDuration": 10
+    },
+    "src/app/api/tasks/answer/route.ts": {
+      "maxDuration": 10
+    },
+    "src/app/api/keep-alive/route.ts": {
+      "maxDuration": 10
+    }
+  }
+}

@@ -64,3 +64,59 @@ K-Botter comes pre-configured with a `nixpacks.toml` file to ensure a seamless d
 
 ### How to configure Proxies?
 If you toggle "Use Proxy" in the UI, K-Botter reads from an array of proxies configured inside `engine.ts` (`defaultProxies`). Open the file and insert your IP:PORT combos to instantly secure your traffic!
+
+---
+
+## ⚠️ Vercel Deployment Limitations & Workarounds
+
+When deploying to Vercel, be aware of these limitations:
+
+### 1. **Serverless Function Timeout (10-60 seconds)**
+Vercel's Hobby plan limits serverless functions to 10 seconds (Pro: 60 seconds, Enterprise: 900 seconds). Since Kahoot sessions can last much longer, this causes premature disconnections.
+
+**Workarounds:**
+- **Upgrade to Vercel Pro** - Increases timeout to 60s per function
+- **Use Vercel Edge Functions** - Lower latency but still time-limited
+- **Deploy on Docker/Railway/Render** - These platforms don't have strict timeouts
+- **Use Coolify on your own VPS** - Full control, no timeouts
+
+### 2. **Cold Starts**
+Serverless functions spin down after inactivity, causing delays on next request.
+
+**Workarounds:**
+- **Cron Job Keep-Alive** - Ping your `/api/stream` endpoint every 5 minutes:
+  ```javascript
+  // vercel.json
+  {
+    "crons": [{
+      "path": "/api/keep-alive",
+      "schedule": "*/5 * * * *"
+    }]
+  }
+  ```
+- **Vercel Pro** - Has warmer functions with reduced cold start times
+
+### 3. **WebSocket/SSE Limitations**
+Vercel's serverless architecture doesn't support persistent WebSocket connections well.
+
+**Workarounds:**
+- **Use Server-Sent Events (SSE)** - Already implemented in `/api/stream`
+- **Add Reconnection Logic** - Client auto-reconnects on disconnect
+- **Use a separate Node.js server** - Run the engine on a persistent server (Railway, Render, VPS)
+
+### Recommended Architecture for Vercel
+```
+┌─────────────────┐      SSE      ┌─────────────────────┐
+│  Next.js on     │ ◄────────────►│  Node.js/Persistent │
+│  Vercel (UI)    │               │  Server (Engine)    │
+└─────────────────┘               └─────────────────────┘
+                                         │
+                                    WebSocket
+                                         │
+                                    ┌────┴────┐
+                                    │  Kahoot │
+                                    │ Servers │
+                                    └─────────┘
+```
+
+This hybrid approach keeps the fast UI on Vercel while running the long-lived engine on a persistent server.

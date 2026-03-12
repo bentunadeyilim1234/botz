@@ -1,19 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: process.env.VERCEL ? undefined : 'standalone',
   reactCompiler: true,
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://ws.alitunabaylan.com.tr/api/:path*',
-      },
-      {
-        source: '/ws/:path*',
-        destination: 'https://ws.alitunabaylan.com.tr/ws/:path*',
-      },
-    ];
-  },
+  serverExternalPackages: ['kahoot.js-updated']
 };
 
 export default nextConfig;
